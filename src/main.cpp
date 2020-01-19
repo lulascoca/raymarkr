@@ -4,8 +4,8 @@
 #include "raymarcher.h"
 #include "vec.h"
 
-#define WIDTH 600
-#define HEIGHT 400
+#define WIDTH 1028
+#define HEIGHT 720
 
 #define MAX_STEPS 400
 #define MAX_DIST 400
@@ -22,21 +22,18 @@ float clip(float n, float lower, float upper) {
 int render(vec2 iResolution, SDL_Window *window, SDL_Renderer *renderer) {
     vec2 tfragCoord = vec2(iResolution.x, iResolution.y);
     vec2 fragCoord = (tfragCoord - iResolution*0.5)/iResolution.y;
-    //cout << fragCoord.x << " " << fragCoord.y << endl;
-    //SDL_Delay(1000);
+
     camera cameravis = camera(vec3(0, 1, 0), normalize(vec3(int(fragCoord.x), int(fragCoord.y), 1)));
     
     // confusing af but it works(idk) :)
     while(fragCoord.x < iResolution.x) {
         while (fragCoord.y <= iResolution.y) {
             cameravis.rd = vec3(fragCoord.x, fragCoord.y, 1);
-            //SDL_Delay(100);
-            cout << cameravis.rd.x << " " << cameravis.rd.y << " " << cameravis.rd.z << endl;
-            // get distance with raymarching calculation
+
             int d = RayMarch(cameravis.ro, cameravis.rd, MAX_STEPS, MAX_DIST, SURF_DIST);
             d = d/200;
             d = clip(d, 0, 255);
-            cout << d << endl;
+
             vec3 surfPoint = cameravis.ro + cameravis.rd*d;
             
             vec3 col = vec3(d, d, d);
@@ -44,10 +41,10 @@ int render(vec2 iResolution, SDL_Window *window, SDL_Renderer *renderer) {
             SDL_RenderDrawPoint(renderer, fragCoord.x, fragCoord.y);
             ++fragCoord.y;
         }
-        SDL_RenderPresent(renderer);
         fragCoord.y = 0;
         ++fragCoord.x;
     }
+    SDL_RenderPresent(renderer);
 
     // Get the next event
     SDL_Event event;
@@ -66,8 +63,6 @@ int main(){
     SDL_Event event;
     SDL_Renderer *renderer;
     SDL_Window *window;
-    SDL_Surface *screen;
-    screen = SDL_CreateRGBSurfaceWithFormat(0, WIDTH, HEIGHT, 32, SDL_PIXELFORMAT_ARGB8888);
 
     // initializes graphics and shit
     SDL_Init(SDL_INIT_EVERYTHING);

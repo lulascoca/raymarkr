@@ -1,7 +1,6 @@
 #ifndef Raymarcher_H
 #define Raymarcher_H
 
-#include <SDL2/SDL.h>
 #include <algorithm>
 #include "vec.h"
 

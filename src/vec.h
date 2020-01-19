@@ -1,7 +1,6 @@
 #ifndef Vec_h
 #define Vec_h
 
-#include "SDL2/SDL.h"
 #include "iostream"
 
 struct vec2 {
