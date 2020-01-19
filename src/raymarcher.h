@@ -19,7 +19,7 @@ float getDist(vec3 p) {
     // z is camera to front
     // r is the radius of the sphere
     //                      x    y    z     r
-	sphere s = sphere(vec3(0.0, 1.0, 2.0), 1.0);
+	sphere s = sphere(vec3(0.0, 1.0, 7.0), 1.0);
     
     // calculates the lentgh of the vector from the camera to the center of
     // the sphere and subtracts the radius to assure we dont go into it oof
@@ -31,7 +31,7 @@ float getDist(vec3 p) {
     
     // overall distance is the minimum of both distances
     float overallDist = std::min(sphereDist, planeDist);
-    return sphereDist;
+    return overallDist;
 }
 
 float RayMarch(vec3 ro, vec3 rd, int max_steps, float max_dist, float surf_dist){
